@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import java.lang.String;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -19,6 +20,9 @@ import java.security.acl.LastOwnerException;
 
 public class secondScreen extends AppCompatActivity {
     final Context c = this;
+    String s;
+    String i;
+    double d;
 
 
 
@@ -38,11 +42,20 @@ public class secondScreen extends AppCompatActivity {
             AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(c);
             alertDialogBuilderUserInput.setView(v);
 
-            final EditText userInputDialogEditText = (EditText) v.findViewById(R.id.userInputDialog);
-            alertDialogBuilderUserInput.setCancelable(false).setPositiveButton("Send", new DialogInterface.OnClickListener() {
+            final EditText inputName = (EditText) v.findViewById(R.id.name);
+            final EditText inputNumber = (EditText) v.findViewById(R.id.amount);
+
+
+            alertDialogBuilderUserInput.setCancelable(false).setPositiveButton("Create", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    s = inputName.getText().toString();
+                    d = Double.parseDouble(inputNumber.getText().toString());
+                    System.out.println(s);
+                    System.out.println(d);
 
+                    TextView textView = (TextView) findViewById(R.id.test);
+                    textView.setText(s);
                 }
             }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                 @Override
