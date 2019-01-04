@@ -13,15 +13,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import java.lang.String;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
 import java.security.acl.LastOwnerException;
+import java.util.InputMismatchException;
 
 public class secondScreen extends AppCompatActivity {
     final Context c = this;
     String s;
-    String i;
     double d;
 
 
@@ -46,23 +47,30 @@ public class secondScreen extends AppCompatActivity {
             final EditText inputNumber = (EditText) v.findViewById(R.id.amount);
 
 
-            alertDialogBuilderUserInput.setCancelable(false).setPositiveButton("Create", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    s = inputName.getText().toString();
-                    d = Double.parseDouble(inputNumber.getText().toString());
-                    System.out.println(s);
-                    System.out.println(d);
+                alertDialogBuilderUserInput.setCancelable(false);
+                alertDialogBuilderUserInput.setPositiveButton("Create", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        try {
+                            s = inputName.getText().toString();
+                            d = Double.parseDouble(inputNumber.getText().toString());
+                            TextView textView = (TextView) findViewById(R.id.test);
+                            textView.setText(s);
+                        } catch (NumberFormatException q) {
+                            Toast.makeText(secondScreen.this, "Please Enter A Number in the Enter Amount", Toast.LENGTH_LONG).show();
+                        }
+                        System.out.println(s);
+                        System.out.println(d);
 
-                    TextView textView = (TextView) findViewById(R.id.test);
-                    textView.setText(s);
-                }
-            }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
+
+                    }
+                });
+                alertDialogBuilderUserInput.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
                 AlertDialog alertDialogAndroid = alertDialogBuilderUserInput.create();
                 alertDialogAndroid.show();
             }
