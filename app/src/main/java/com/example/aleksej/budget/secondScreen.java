@@ -9,21 +9,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import java.lang.String;
+import java.util.*;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
 import java.security.acl.LastOwnerException;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 
 public class secondScreen extends AppCompatActivity {
     final Context c = this;
     String s;
     double d;
+    ArrayList<budget> list = new ArrayList<budget>();
 
 
 
@@ -38,13 +43,14 @@ public class secondScreen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-            LayoutInflater layoutInflaterAndriod = LayoutInflater.from(c);
+            final LayoutInflater layoutInflaterAndriod = LayoutInflater.from(c);
             View v = layoutInflaterAndriod.inflate(R.layout.user_input_dialog_box, null);
             AlertDialog.Builder alertDialogBuilderUserInput = new AlertDialog.Builder(c);
             alertDialogBuilderUserInput.setView(v);
 
             final EditText inputName = (EditText) v.findViewById(R.id.name);
             final EditText inputNumber = (EditText) v.findViewById(R.id.amount);
+            final ListView budgetList = (ListView) v.findViewById(R.id.lV);
 
 
                 alertDialogBuilderUserInput.setCancelable(false);
@@ -54,13 +60,14 @@ public class secondScreen extends AppCompatActivity {
                         try {
                             s = inputName.getText().toString();
                             d = Double.parseDouble(inputNumber.getText().toString());
-                            TextView textView = (TextView) findViewById(R.id.test);
-                            textView.setText(s);
+                            budget b = new budget(s, d);
+                            list.add(b);
+                            System.out.println(list.toString());
+                            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list );
                         } catch (NumberFormatException q) {
                             Toast.makeText(secondScreen.this, "Please Enter A Number in the Enter Amount", Toast.LENGTH_LONG).show();
                         }
-                        System.out.println(s);
-                        System.out.println(d);
+
 
 
                     }
