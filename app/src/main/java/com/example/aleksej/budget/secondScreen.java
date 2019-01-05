@@ -50,7 +50,7 @@ public class secondScreen extends AppCompatActivity {
 
             final EditText inputName = (EditText) v.findViewById(R.id.name);
             final EditText inputNumber = (EditText) v.findViewById(R.id.amount);
-            final ListView budgetList = (ListView) v.findViewById(R.id.lV);
+
 
 
                 alertDialogBuilderUserInput.setCancelable(false);
@@ -63,7 +63,7 @@ public class secondScreen extends AppCompatActivity {
                             budget b = new budget(s, d);
                             list.add(b);
                             System.out.println(list.toString());
-                            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, list );
+
                         } catch (NumberFormatException q) {
                             Toast.makeText(secondScreen.this, "Please Enter A Number in the Enter Amount", Toast.LENGTH_LONG).show();
                         }
@@ -83,4 +83,6 @@ public class secondScreen extends AppCompatActivity {
             }
         });
     }
+
+
 }
