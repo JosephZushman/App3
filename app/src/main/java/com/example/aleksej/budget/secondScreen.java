@@ -7,8 +7,11 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,6 +32,9 @@ public class secondScreen extends AppCompatActivity {
     String s;
     double d;
     ArrayList<budget> list = new ArrayList<budget>();
+    RecyclerView recyclerView;
+    RecyclerView.Adapter mAdapter;
+    RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
 
 
 
@@ -50,7 +56,11 @@ public class secondScreen extends AppCompatActivity {
 
             final EditText inputName = (EditText) v.findViewById(R.id.name);
             final EditText inputNumber = (EditText) v.findViewById(R.id.amount);
-
+            recyclerView = findViewById(R.id.recyclerView);
+            recyclerView.setHasFixedSize(true);
+            mAdapter = new adapter(list);
+            recyclerView.setLayoutManager(manager);
+            recyclerView.setAdapter(mAdapter);
 
 
                 alertDialogBuilderUserInput.setCancelable(false);
@@ -83,6 +93,8 @@ public class secondScreen extends AppCompatActivity {
             }
         });
     }
+    public void createRV(){
 
+    }
 
 }
