@@ -33,7 +33,7 @@ public class secondScreen extends AppCompatActivity {
     double d;
     ArrayList<budget> list = new ArrayList<budget>();
     RecyclerView recyclerView;
-    RecyclerView.Adapter mAdapter;
+    adapter mAdapter;
     RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
 
 
@@ -61,6 +61,15 @@ public class secondScreen extends AppCompatActivity {
             mAdapter = new adapter(list);
             recyclerView.setLayoutManager(manager);
             recyclerView.setAdapter(mAdapter);
+
+            mAdapter.setOnItemClickListener(new adapter.OnItemClickListener() {
+                @Override
+                public void onDeleteClick(int position) {
+                    removeItem(position);
+                }
+            });
+
+
 
 
                 alertDialogBuilderUserInput.setCancelable(false);
@@ -93,8 +102,9 @@ public class secondScreen extends AppCompatActivity {
             }
         });
     }
-    public void createRV(){
-
+    public void removeItem(int position){
+        list.remove(position);
+        mAdapter.notifyItemChanged(position);
     }
 
 }

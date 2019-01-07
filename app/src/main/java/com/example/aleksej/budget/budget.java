@@ -30,6 +30,9 @@ public class budget {
         budget = b;
     }
     public String toString(){
-        return "Budget = name: " + name + " Budget: $" + budget;
+        String str;
+        str = "Budget" + "\n" + "Name: " + name + "\n"+ "Budget: $" + budget;
+
+        return str;
     }
 }
