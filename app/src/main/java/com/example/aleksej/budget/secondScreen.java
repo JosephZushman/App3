@@ -56,22 +56,7 @@ public class secondScreen extends AppCompatActivity {
 
             final EditText inputName = (EditText) v.findViewById(R.id.name);
             final EditText inputNumber = (EditText) v.findViewById(R.id.amount);
-            recyclerView = findViewById(R.id.recyclerView);
-            recyclerView.setHasFixedSize(true);
-            mAdapter = new adapter(list);
-            recyclerView.setLayoutManager(manager);
-            recyclerView.setAdapter(mAdapter);
-
-            mAdapter.setOnItemClickListener(new adapter.OnItemClickListener() {
-                @Override
-                public void onDeleteClick(int position) {
-                    removeItem(position);
-                }
-            });
-
-
-
-
+            buildRecycleView();
                 alertDialogBuilderUserInput.setCancelable(false);
                 alertDialogBuilderUserInput.setPositiveButton("Create", new DialogInterface.OnClickListener() {
                     @Override
@@ -86,9 +71,6 @@ public class secondScreen extends AppCompatActivity {
                         } catch (NumberFormatException q) {
                             Toast.makeText(secondScreen.this, "Please Enter A Number in the Enter Amount", Toast.LENGTH_LONG).show();
                         }
-
-
-
                     }
                 });
                 alertDialogBuilderUserInput.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -105,6 +87,30 @@ public class secondScreen extends AppCompatActivity {
     public void removeItem(int position){
         list.remove(position);
         mAdapter.notifyItemChanged(position);
+    }
+
+    public void buildRecycleView(){
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        mAdapter = new adapter(list);
+        recyclerView.setLayoutManager(manager);
+        recyclerView.setAdapter(mAdapter);
+
+        mAdapter.setOnItemClickListener(new adapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+            Intent intent = new Intent(secondScreen.this, budget_screen.class);
+            intent.putExtra("Budget", list.get(position));
+
+            startActivity(intent);
+            }
+
+            @Override
+            public void onDeleteClick(int position) {
+                removeItem(position);
+            }
+        });
+
     }
 
 }

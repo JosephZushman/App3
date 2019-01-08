@@ -15,6 +15,7 @@ public class adapter extends RecyclerView.Adapter<adapter.BudgetViewHolder> {
    private OnItemClickListener mListener;
 
     public interface OnItemClickListener {
+        void onItemClick(int position);
         void onDeleteClick(int position);
     }
 
@@ -44,8 +45,22 @@ public class adapter extends RecyclerView.Adapter<adapter.BudgetViewHolder> {
                     }
                 }
             });
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
-    }
+        }
+
+
 
     public adapter(ArrayList<budget> list){
         mList = list;
