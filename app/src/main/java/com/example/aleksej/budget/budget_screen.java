@@ -16,7 +16,7 @@ public class budget_screen extends AppCompatActivity {
     private Button addAmountSpent;
     Double spentAmount =0.0;
     Double amount = 0.0;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
