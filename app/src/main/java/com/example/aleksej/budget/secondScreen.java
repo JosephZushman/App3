@@ -36,7 +36,7 @@ public class secondScreen extends AppCompatActivity {
     final Context c = this;
     String s;
     double d;
-    ArrayList<budget> list = new ArrayList<budget>();
+    ArrayList<budget> arrayList = new ArrayList<budget>();
     RecyclerView recyclerView;
     adapter mAdapter;
     RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
@@ -47,9 +47,9 @@ public class secondScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second_screen);
-        loadData();
-        Button addButton = findViewById(R.id.addButton);
 
+
+        Button addButton = findViewById(R.id.addButton);
         Button buttonSave = findViewById(R.id.saveButton);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,13 +57,14 @@ public class secondScreen extends AppCompatActivity {
                 add();
             }
         });
-
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveData();
             }
         });
+        loadData();
+        buildRecycleView();
     }
 
     public void add(){
@@ -74,7 +75,7 @@ public class secondScreen extends AppCompatActivity {
 
         final EditText inputName = (EditText) v.findViewById(R.id.name);
         final EditText inputNumber = (EditText) v.findViewById(R.id.amount);
-        buildRecycleView();
+
         alertDialogBuilderUserInput.setCancelable(false);
         alertDialogBuilderUserInput.setPositiveButton("Create", new DialogInterface.OnClickListener() {
             @Override
@@ -83,8 +84,8 @@ public class secondScreen extends AppCompatActivity {
                     s = inputName.getText().toString();
                     d = Double.parseDouble(inputNumber.getText().toString());
                     budget b = new budget(s, d);
-                    list.add(b);
-                    System.out.println(list.toString());
+                    arrayList.add(b);
+                    System.out.println(arrayList.toString());
 
                 } catch (NumberFormatException q) {
                     Toast.makeText(secondScreen.this, "Please Enter A Number in the Enter Amount", Toast.LENGTH_LONG).show();
@@ -102,37 +103,42 @@ public class secondScreen extends AppCompatActivity {
     }
 
     private void saveData(){
-        System.out.println("in save data");
+        System.out.println("Enter save");
         SharedPreferences  sharedPreferences = getSharedPreferences("Shared Preferences", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
-        String json = gson.toJson(list);
+        String json = gson.toJson(arrayList);
         editor.putString("Task List", json);
-        editor.apply();
+        System.out.println(json);
+        editor.commit();
+        System.out.println("Save executed");
     }
 
     private void loadData(){
-        System.out.println("in load data");
+        System.out.println("Enter load");
         SharedPreferences  sharedPreferences = getSharedPreferences("Shared Preferences", MODE_PRIVATE);
         Gson gson = new Gson();
-        String json = sharedPreferences.getString("task list", null);
+        String json = sharedPreferences.getString("Task List", null);
         Type type = new TypeToken<ArrayList<budget>>() {}.getType();
-        list = gson.fromJson(json , type);
-        if(list == null){
-            list = new ArrayList<>();
+        arrayList = gson.fromJson(json , type);
+        System.out.println(json);
+        if(arrayList == null){
+            arrayList = new ArrayList<budget>();
+            System.out.println("null list");
         }
+        System.out.println("Load executed");
     }
 
 
     public void removeItem(int position){
-        list.remove(position);
+        arrayList.remove(position);
         mAdapter.notifyItemChanged(position);
     }
 
     public void buildRecycleView(){
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
-        mAdapter = new adapter(list);
+        mAdapter = new adapter(arrayList);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(mAdapter);
 
@@ -140,7 +146,7 @@ public class secondScreen extends AppCompatActivity {
             @Override
             public void onItemClick(int position) {
             Intent intent = new Intent(secondScreen.this, budget_screen.class);
-            intent.putExtra("Budget", list.get(position));
+            intent.putExtra("Budget", arrayList.get(position));
 
             startActivity(intent);
             }
