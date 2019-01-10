@@ -7,10 +7,11 @@ public class budget implements Parcelable {
 
     String name;
     Double budget;
-
+    Double spentAmount;
     public budget(){
         name = "";
         budget = 0.0;
+        spentAmount = 0.0;
     }
     public budget (String n, double b){
         name = n;
@@ -21,7 +22,8 @@ public class budget implements Parcelable {
         name = in.readString();
         if (in.readByte() == 0) {
             budget = null;
-        } else {
+        }
+        else {
             budget = in.readDouble();
         }
     }
@@ -29,11 +31,13 @@ public class budget implements Parcelable {
     public static final Creator<budget> CREATOR = new Creator<budget>() {
         @Override
         public budget createFromParcel(Parcel in) {
+
             return new budget(in);
         }
 
         @Override
         public budget[] newArray(int size) {
+
             return new budget[size];
         }
     };
@@ -42,7 +46,6 @@ public class budget implements Parcelable {
         return budget;
     }
     public String getName(){
-
         return name;
     }
     public void setName(String n){
@@ -52,6 +55,13 @@ public class budget implements Parcelable {
     public void setBudget(Double b){
 
         budget = b;
+    }
+    public void setSpentAmount(Double s){
+        spentAmount =s;
+    }
+    public Double getSpentAmount(){
+
+        return spentAmount;
     }
     public String toString(){
         String str;
@@ -70,7 +80,8 @@ public class budget implements Parcelable {
         dest.writeString(name);
         if (budget == null) {
             dest.writeByte((byte) 0);
-        } else {
+        }
+        else {
             dest.writeByte((byte) 1);
             dest.writeDouble(budget);
         }
