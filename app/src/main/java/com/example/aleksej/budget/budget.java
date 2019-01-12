@@ -57,6 +57,7 @@ public class budget implements Parcelable {
         budget = b;
     }
     public void setSpentAmount(Double s){
+
         spentAmount =s;
     }
     public Double getSpentAmount(){
@@ -72,6 +73,7 @@ public class budget implements Parcelable {
 
     @Override
     public int describeContents() {
+
         return 0;
     }
 
