@@ -43,30 +43,33 @@ public class budget_screen extends AppCompatActivity {
 
         amountSpent = findViewById(R.id.amountSpent);
         final TextView textView3 = findViewById(R.id.textView4);
-        loadData();
+
         textView3.setText(spendAmount);
+        loadData();
+        totalAmountSpent = Double.parseDouble(spendAmount);
 
         addAmountSpent = (Button)findViewById(R.id.setAmountSpent);
         addAmountSpent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                totalAmountSpent = Double.parseDouble(spendAmount);
                 try {
                     spentAmount = Double.parseDouble(amountSpent.getText().toString());
                     if (spentAmount < 0) {
                         Toast.makeText(budget_screen.this, "You cant do that!", Toast.LENGTH_LONG).show();
                     } else {
-                        totalAmountSpent+= spentAmount;
-                        spendAmount = "Amount Spent $" + df.format(totalAmountSpent);
-                        textView3.setText(spendAmount);
-                        saveData();
-                        spendAmount = totalAmountSpent.toString();
-                        if (totalAmountSpent > b) {
-                            textView2.setTextColor(Color.parseColor("#b71c1c"));
-                            textView3.setTextColor(Color.parseColor("#b71c1c"));
+                       totalAmountSpent+= spentAmount;
+                       spendAmount = "Amount Spent $" + df.format(totalAmountSpent);
+                       textView3.setText(spendAmount);
+                       saveData();
+
+                       if (totalAmountSpent > b) {
+                          textView2.setTextColor(Color.parseColor("#b71c1c"));
+                          textView3.setTextColor(Color.parseColor("#b71c1c"));
                             Toast.makeText(budget_screen.this, "You have exceeded your budget!", Toast.LENGTH_LONG).show();
                         } else if (b > totalAmountSpent) {
-                            textView2.setTextColor(Color.parseColor("#2e7d32"));
-                            textView3.setTextColor(Color.parseColor("#2e7d32"));
+                           textView2.setTextColor(Color.parseColor("#2e7d32"));
+                           textView3.setTextColor(Color.parseColor("#2e7d32"));
                         }
                     }
                 }
@@ -84,13 +87,11 @@ public class budget_screen extends AppCompatActivity {
         editor.putString("spendAmount", spendAmount);
         editor.apply();
         editor.commit();
-        System.out.println("in save data");
     }
 
     public void loadData(){
         myPrefs = getSharedPreferences("prefID", Context.MODE_PRIVATE);
         spendAmount = myPrefs.getString("spendAmount","");
-        System.out.println("in load data");
-    }
+     }
 
 }

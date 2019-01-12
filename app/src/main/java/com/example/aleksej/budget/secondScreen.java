@@ -102,31 +102,25 @@ public class secondScreen extends AppCompatActivity {
         alertDialogAndroid.show();
     }
 
-    private void saveData(){
-        System.out.println("Enter save");
-        SharedPreferences  sharedPreferences = getSharedPreferences("Shared Preferences", MODE_PRIVATE);
+    private void saveData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("Shared Preferences", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
         String json = gson.toJson(arrayList);
         editor.putString("Task List", json);
-        System.out.println(json);
         editor.commit();
-        System.out.println("Save executed");
+        Toast.makeText(secondScreen.this, "Saved!", Toast.LENGTH_LONG).show();
     }
 
     private void loadData(){
-        System.out.println("Enter load");
         SharedPreferences  sharedPreferences = getSharedPreferences("Shared Preferences", MODE_PRIVATE);
         Gson gson = new Gson();
         String json = sharedPreferences.getString("Task List", null);
         Type type = new TypeToken<ArrayList<budget>>() {}.getType();
         arrayList = gson.fromJson(json , type);
-        System.out.println(json);
         if(arrayList == null){
             arrayList = new ArrayList<budget>();
-            System.out.println("null list");
         }
-        System.out.println("Load executed");
     }
 
 
