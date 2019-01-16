@@ -1,5 +1,7 @@
 package com.example.aleksej.budget;
 
+
+import android.content.*;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -8,6 +10,8 @@ public class budget implements Parcelable {
     String name;
     Double budget;
     Double spentAmount;
+    SharedPreferences myPrefs;
+
     public budget(){
         name = "";
         budget = 0.0;
@@ -43,9 +47,11 @@ public class budget implements Parcelable {
     };
 
     public Double getBudget(){
+
         return budget;
     }
     public String getName(){
+
         return name;
     }
     public void setName(String n){
@@ -88,4 +94,6 @@ public class budget implements Parcelable {
             dest.writeDouble(budget);
         }
     }
+
+
 }

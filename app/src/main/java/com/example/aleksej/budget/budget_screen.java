@@ -43,16 +43,17 @@ public class budget_screen extends AppCompatActivity {
 
         amountSpent = findViewById(R.id.amountSpent);
         final TextView textView3 = findViewById(R.id.textView4);
-
-        textView3.setText(spendAmount);
         loadData();
-        totalAmountSpent = Double.parseDouble(spendAmount);
+        spendAmount = "Amount Spent $" + df.format(totalAmountSpent);
+        textView3.setText(spendAmount);
+
+
 
         addAmountSpent = (Button)findViewById(R.id.setAmountSpent);
         addAmountSpent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                totalAmountSpent = Double.parseDouble(spendAmount);
+
                 try {
                     spentAmount = Double.parseDouble(amountSpent.getText().toString());
                     if (spentAmount < 0) {
@@ -82,16 +83,20 @@ public class budget_screen extends AppCompatActivity {
     }
 
     public void saveData(){
+        String totalSpentAmountStr = Double.toString(totalAmountSpent);
+        System.out.println(totalSpentAmountStr);
         myPrefs = getSharedPreferences("prefID", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = myPrefs.edit();
-        editor.putString("spendAmount", spendAmount);
+        editor.putString("totalSpentAmount", totalSpentAmountStr);
         editor.apply();
         editor.commit();
     }
 
     public void loadData(){
         myPrefs = getSharedPreferences("prefID", Context.MODE_PRIVATE);
-        spendAmount = myPrefs.getString("spendAmount","");
+        String str = myPrefs.getString("totalSpentAmount","0.00");
+        totalAmountSpent = Double.parseDouble(str);
+        System.out.println(totalAmountSpent);
      }
 
 }
